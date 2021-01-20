@@ -15,24 +15,42 @@ class ContadorComponent{
                 currentContext[propertyKey] = newValue
                 return true
             }
+            
         }
+        const contador = new Proxy({
+            valor: VALOR_CONTADOR,
+            efetuarParada: () => { }
+        }, handler)
+    
+        return contador
     }
 
-    const contador = new Proxy({
-        valor: VALOR_CONTADOR,
-        efetuarParada: () => { }
-    }, handler)
+    atualizarTexto = ({ elementoContador, contador }) => () => {
+        const identificadorTexto = '$$contador'
+        const textoPadrao = `Começando em <strong>${identificadorTexto}</strong> segundos...`
+        elementoContador.innerHTML = textoPadrao.replace(identificadorTexto, contador.valor--)
+    }
 
-    return contador
+    inicializar() {
+        console.log('inicializou!!')
+        const elementoContador = document.getElementById(ID_CONTADOR)
+    
+        const contador = this.prepararContadorProxy()
+        //contador.valor = 100
+        //contador.valor = 90
+        //contador.valor = 80
+
+        const argumentos = {
+            elementoContador,
+            contador
+        }
+
+        const fn = this.atualizarTexto(argumentos)
+        setInterval(fn, PERIODO_INTERVALO)
+        
+    }
+
+    
 }
 
-inicializar() {
-    console.log('inicializou!!')
-    const elementoContador = document.getElementById(ID_CONTADOR)
 
-    const contador = this.prepararContadorProxy()
-    contador.valor = 100
-    contador.valor = 90
-    contador.valor = 80
-
-}
