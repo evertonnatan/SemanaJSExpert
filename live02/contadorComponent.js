@@ -1,3 +1,9 @@
+// IIFE => Immeately Invoked Function Expression
+
+(() => {
+
+
+
 const BTN_REINICIAR = "btnReiniciar"
 const   ID_CONTADOR = "contador"
 const VALOR_CONTADOR = 100
@@ -40,15 +46,23 @@ class ContadorComponent{
             clearInterval(idIntervalo)
 
             elementoContador.innerHTML = ""
-            this.desabilitarBotao()
+            this.desabilitarBotao(false)
         }
     }
 
     prepararBotao(elementoBotao, iniciarFn) {
-        elementoBotao.addEventListener('click', iniciarFn)
+        elementoBotao.addEventListener('click', iniciarFn.bind(this))
 
-        return () => {
-            
+        return (valor = true) => {
+            const atributo = 'disabled'
+
+            if(valor) {
+                elementoBotao.setAttribute(atributo, valor)
+                return;
+            }
+
+            elementoBotao.removeAttribute(atributo)
+
         }
     }
 
@@ -72,9 +86,9 @@ class ContadorComponent{
         {
             const elementoBotao = document.getElementById(BTN_REINICIAR)
             const desabilitarBotao = this.prepararBotao(elementoBotao, this.inicializar)
-
+            desabilitarBotao()
             const argumentos = { elementoContador, idIntervalo } // Eu posso criar variáveis com o mesmo nome, desde que esteja em contextos diferentes. Nese caso, o que está entre as chaves pode ser considerado outro contexto.
-            const desabilitarBotao = () => console.log("Desabilitou...")
+            //const desabilitarBotao = () => console.log("Desabilitou...")
             const pararContadorFn = this.agendarParadaContador.apply({ desabilitarBotao }, [argumentos])
             contador.efetuarParada = pararContadorFn
         }
@@ -84,4 +98,6 @@ class ContadorComponent{
     
 }
 
+window.ContadorComponent = ContadorComponent
 
+}) ()
