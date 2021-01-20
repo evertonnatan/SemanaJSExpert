@@ -11,6 +11,10 @@ class ContadorComponent{
         const handler = {
             set: (currentContext, propertyKey, newValue) => {
                 console.log({ currentContext, propertyKey, newValue })
+                // para parar todo o procedimento:
+                if(!currentContext.valor) {
+                    currentContext.efetuarParada()
+                }
 
                 currentContext[propertyKey] = newValue
                 return true
@@ -31,6 +35,23 @@ class ContadorComponent{
         elementoContador.innerHTML = textoPadrao.replace(identificadorTexto, contador.valor--)
     }
 
+    agendarParadaContador({ elementoContador, idIntervalo }) {
+        return () => {
+            clearInterval(idIntervalo)
+
+            elementoContador.innerHTML = ""
+            this.desabilitarBotao()
+        }
+    }
+
+    prepararBotao(elementoBotao, iniciarFn) {
+        elementoBotao.addEventListener('click', iniciarFn)
+
+        return () => {
+            
+        }
+    }
+
     inicializar() {
         console.log('inicializou!!')
         const elementoContador = document.getElementById(ID_CONTADOR)
@@ -46,7 +67,17 @@ class ContadorComponent{
         }
 
         const fn = this.atualizarTexto(argumentos)
-        setInterval(fn, PERIODO_INTERVALO)
+        const idIntervalo = setInterval(fn, PERIODO_INTERVALO)
+
+        {
+            const elementoBotao = document.getElementById(BTN_REINICIAR)
+            const desabilitarBotao = this.prepararBotao(elementoBotao, this.inicializar)
+
+            const argumentos = { elementoContador, idIntervalo } // Eu posso criar variáveis com o mesmo nome, desde que esteja em contextos diferentes. Nese caso, o que está entre as chaves pode ser considerado outro contexto.
+            const desabilitarBotao = () => console.log("Desabilitou...")
+            const pararContadorFn = this.agendarParadaContador.apply({ desabilitarBotao }, [argumentos])
+            contador.efetuarParada = pararContadorFn
+        }
         
     }
 
