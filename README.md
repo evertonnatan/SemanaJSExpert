@@ -1,4 +1,13 @@
-# SemanaJSExpert
+# Semana-javascript-expert02
 
-Live #1 - Os segredos da Sintaxe Javascript => dia 18/01/2021
-Live #2 - Entendendo o contexto this, Closures, IIFE e o Objeto Proxy em JS - Pré => dia 19/01/2021
+Seja bem vindo(a) à segunda Semana Javascript Expert.
+
+Marque esse projeto com uma estrela 🌟
+
+O código fonte completo de cada aula está dividido nas seguintes pastas:
+
+
+- [Aula 01](./aula01)
+- [Aula 02](./aula02)
+- [Aula 03](./aula03)
+- [Aula 04](./aula04)
