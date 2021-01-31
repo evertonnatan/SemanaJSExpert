@@ -1,8 +1,8 @@
-# Semana-javascript-expert02
+# Semana JS Expert 2021
 
-Seja bem vindo(a) à segunda Semana Javascript Expert.
+🌟
 
-Marque esse projeto com uma estrela 🌟
+Nessa edição do Semana JS Expert, o Erick Wendell mostrou o poder do JavaScript ao desenvolver, totalmente do zero, um aplicativo de Web Confereência. 
 
 O código fonte completo de cada aula está dividido nas seguintes pastas:
 
